@@ -1,0 +1,89 @@
+22:29:52 INFO environment: {'tsgf': '0.1.0', 'python': '3.12.3', 'torch': '2.6.0+cu124', 'device': 'cuda', 'gpu': 'NVIDIA GeForce RTX 2060', 'platform': 'Windows-11-10.0.26200-SP0', 'sklearn': '1.9.1', 'torch_geometric': '2.8.0.post1'}
+22:29:52 INFO dataset: N=12000, mortality rate 0.142, 36 dynamic vars x 48 h
+22:29:57 INFO seed 0: split [8399, 1801, 1800] | strongest edges: NIDiasABP -- NIMAP (0.86); DiasABP -- MAP (0.84); ALT -- AST (0.82); NIMAP -- NISysABP (0.82); BUN -- Creatinine (0.77); MAP -- SysABP (0.71)
+22:30:02 INFO seed 0 | static_mlp             test AUROC 0.6860 AUPRC 0.2407 | val 0.7296 | 5s
+22:31:10 INFO seed 0 | temporal_only          test AUROC 0.8706 AUPRC 0.5607 | val 0.8760 | 68s
+22:31:13 INFO seed 0 | concat_mlp             test AUROC 0.8754 AUPRC 0.5691 | val 0.8940 | 3s
+22:32:08 INFO seed 0 | late_fusion            test AUROC 0.8764 AUPRC 0.5661 | val 0.8869 | 55s
+22:32:10 INFO seed 0 | gbm_concat             test AUROC 0.8914 AUPRC 0.6079 | val 0.8840 | 2s
+22:33:14 INFO seed 0 | graph_corr_k4          test AUROC 0.8800 AUPRC 0.5913 | val 0.8903 | 64s
+22:34:16 INFO seed 0 | graph_none             test AUROC 0.8840 AUPRC 0.6002 | val 0.8912 | 62s
+22:35:41 INFO seed 0 | graph_full             test AUROC 0.8798 AUPRC 0.5925 | val 0.8879 | 84s
+22:36:50 INFO seed 0 | graph_permuted         test AUROC 0.8844 AUPRC 0.5978 | val 0.8878 | 69s
+22:37:53 INFO seed 0 | graph_random           test AUROC 0.8868 AUPRC 0.6156 | val 0.8894 | 63s
+22:37:58 INFO seed 1: split [8399, 1801, 1800] | strongest edges: NIDiasABP -- NIMAP (0.86); DiasABP -- MAP (0.85); NIMAP -- NISysABP (0.82); ALT -- AST (0.81); BUN -- Creatinine (0.76); MAP -- SysABP (0.71)
+22:38:02 INFO seed 1 | static_mlp             test AUROC 0.6992 AUPRC 0.2508 | val 0.6923 | 4s
+22:38:57 INFO seed 1 | temporal_only          test AUROC 0.8509 AUPRC 0.5279 | val 0.8384 | 55s
+22:39:00 INFO seed 1 | concat_mlp             test AUROC 0.8554 AUPRC 0.5385 | val 0.8583 | 4s
+22:39:55 INFO seed 1 | late_fusion            test AUROC 0.8611 AUPRC 0.5508 | val 0.8512 | 55s
+22:39:57 INFO seed 1 | gbm_concat             test AUROC 0.8680 AUPRC 0.5544 | val 0.8572 | 2s
+22:41:06 INFO seed 1 | graph_corr_k4          test AUROC 0.8599 AUPRC 0.5494 | val 0.8505 | 69s
+22:42:10 INFO seed 1 | graph_none             test AUROC 0.8616 AUPRC 0.5599 | val 0.8528 | 65s
+22:43:42 INFO seed 1 | graph_full             test AUROC 0.8552 AUPRC 0.5550 | val 0.8497 | 92s
+22:44:48 INFO seed 1 | graph_permuted         test AUROC 0.8611 AUPRC 0.5660 | val 0.8536 | 66s
+22:45:57 INFO seed 1 | graph_random           test AUROC 0.8601 AUPRC 0.5673 | val 0.8543 | 69s
+22:46:01 INFO seed 2: split [8399, 1801, 1800] | strongest edges: NIDiasABP -- NIMAP (0.87); DiasABP -- MAP (0.85); NIMAP -- NISysABP (0.82); ALT -- AST (0.82); BUN -- Creatinine (0.76); MAP -- SysABP (0.71)
+22:46:08 INFO seed 2 | static_mlp             test AUROC 0.7020 AUPRC 0.2538 | val 0.6893 | 6s
+22:46:57 INFO seed 2 | temporal_only          test AUROC 0.8472 AUPRC 0.5344 | val 0.8569 | 50s
+22:47:00 INFO seed 2 | concat_mlp             test AUROC 0.8646 AUPRC 0.5501 | val 0.8716 | 3s
+22:47:50 INFO seed 2 | late_fusion            test AUROC 0.8678 AUPRC 0.5671 | val 0.8676 | 50s
+22:47:52 INFO seed 2 | gbm_concat             test AUROC 0.8662 AUPRC 0.5642 | val 0.8684 | 2s
+22:49:01 INFO seed 2 | graph_corr_k4          test AUROC 0.8660 AUPRC 0.5782 | val 0.8650 | 69s
+22:49:57 INFO seed 2 | graph_none             test AUROC 0.8633 AUPRC 0.5578 | val 0.8668 | 56s
+22:51:29 INFO seed 2 | graph_full             test AUROC 0.8591 AUPRC 0.5492 | val 0.8708 | 92s
+22:52:18 INFO seed 2 | graph_permuted         test AUROC 0.8626 AUPRC 0.5635 | val 0.8667 | 49s
+22:53:24 INFO seed 2 | graph_random           test AUROC 0.8686 AUPRC 0.5770 | val 0.8681 | 66s
+22:53:24 INFO done -> results\full\results.csv
+23:32:59 INFO environment: {'tsgf': '0.1.0', 'python': '3.12.3', 'torch': '2.6.0+cu124', 'device': 'cuda', 'gpu': 'NVIDIA GeForce RTX 2060', 'platform': 'Windows-11-10.0.26200-SP0', 'sklearn': '1.9.1', 'torch_geometric': '2.8.0.post1'}
+23:32:59 INFO dataset: N=12000, mortality rate 0.142, 36 dynamic vars x 48 h
+23:33:03 INFO seed 0: split [8399, 1801, 1800] | strongest edges: NIDiasABP -- NIMAP (0.86); DiasABP -- MAP (0.84); ALT -- AST (0.82); NIMAP -- NISysABP (0.82); BUN -- Creatinine (0.77); MAP -- SysABP (0.71)
+23:34:09 INFO seed 0 | graph_corr_k2          test AUROC 0.8826 AUPRC 0.5982 | val 0.8858 | 66s
+23:35:03 INFO seed 0 | graph_corr_k8          test AUROC 0.8865 AUPRC 0.6135 | val 0.8889 | 54s
+23:36:06 INFO seed 0 | graph_varvar_only      test AUROC 0.8853 AUPRC 0.6106 | val 0.8891 | 63s
+23:37:03 INFO seed 0 | graph_cross_only       test AUROC 0.8863 AUPRC 0.5996 | val 0.8898 | 57s
+23:38:56 INFO seed 0 | graph_meanpool         test AUROC 0.8819 AUPRC 0.6057 | val 0.8918 | 113s
+23:38:58 INFO seed 1: split [8399, 1801, 1800] | strongest edges: NIDiasABP -- NIMAP (0.86); DiasABP -- MAP (0.85); NIMAP -- NISysABP (0.82); ALT -- AST (0.81); BUN -- Creatinine (0.76); MAP -- SysABP (0.71)
+23:40:06 INFO seed 1 | graph_corr_k2          test AUROC 0.8608 AUPRC 0.5509 | val 0.8514 | 67s
+23:41:17 INFO seed 1 | graph_corr_k8          test AUROC 0.8609 AUPRC 0.5543 | val 0.8536 | 71s
+23:42:26 INFO seed 1 | graph_varvar_only      test AUROC 0.8604 AUPRC 0.5550 | val 0.8505 | 69s
+23:43:32 INFO seed 1 | graph_cross_only       test AUROC 0.8588 AUPRC 0.5608 | val 0.8511 | 66s
+23:45:15 INFO seed 1 | graph_meanpool         test AUROC 0.8635 AUPRC 0.5824 | val 0.8556 | 103s
+23:45:18 INFO seed 2: split [8399, 1801, 1800] | strongest edges: NIDiasABP -- NIMAP (0.87); DiasABP -- MAP (0.85); NIMAP -- NISysABP (0.82); ALT -- AST (0.82); BUN -- Creatinine (0.76); MAP -- SysABP (0.71)
+23:46:27 INFO seed 2 | graph_corr_k2          test AUROC 0.8706 AUPRC 0.5763 | val 0.8681 | 68s
+23:47:37 INFO seed 2 | graph_corr_k8          test AUROC 0.8661 AUPRC 0.5819 | val 0.8688 | 70s
+23:48:42 INFO seed 2 | graph_varvar_only      test AUROC 0.8686 AUPRC 0.5839 | val 0.8708 | 65s
+23:49:49 INFO seed 2 | graph_cross_only       test AUROC 0.8654 AUPRC 0.5779 | val 0.8679 | 67s
+23:51:34 INFO seed 2 | graph_meanpool         test AUROC 0.8621 AUPRC 0.5723 | val 0.8684 | 105s
+23:51:37 INFO seed 3: split [8399, 1801, 1800] | strongest edges: NIDiasABP -- NIMAP (0.87); DiasABP -- MAP (0.84); NIMAP -- NISysABP (0.82); ALT -- AST (0.81); BUN -- Creatinine (0.76); MAP -- SysABP (0.71)
+23:51:41 INFO seed 3 | static_mlp             test AUROC 0.6795 AUPRC 0.2446 | val 0.6731 | 4s
+23:52:51 INFO seed 3 | temporal_only          test AUROC 0.8369 AUPRC 0.4900 | val 0.8592 | 70s
+23:52:54 INFO seed 3 | concat_mlp             test AUROC 0.8618 AUPRC 0.5271 | val 0.8808 | 2s
+23:53:56 INFO seed 3 | late_fusion            test AUROC 0.8543 AUPRC 0.5027 | val 0.8688 | 62s
+23:53:57 INFO seed 3 | gbm_concat             test AUROC 0.8551 AUPRC 0.5116 | val 0.8808 | 1s
+23:54:59 INFO seed 3 | graph_corr_k4          test AUROC 0.8500 AUPRC 0.5024 | val 0.8706 | 63s
+23:55:58 INFO seed 3 | graph_corr_k2          test AUROC 0.8424 AUPRC 0.4835 | val 0.8664 | 59s
+23:57:04 INFO seed 3 | graph_corr_k8          test AUROC 0.8527 AUPRC 0.5114 | val 0.8702 | 66s
+23:58:15 INFO seed 3 | graph_varvar_only      test AUROC 0.8523 AUPRC 0.5200 | val 0.8698 | 71s
+23:59:20 INFO seed 3 | graph_cross_only       test AUROC 0.8514 AUPRC 0.5009 | val 0.8671 | 65s
+00:01:08 INFO seed 3 | graph_meanpool         test AUROC 0.8507 AUPRC 0.5056 | val 0.8777 | 109s
+00:02:05 INFO seed 3 | graph_none             test AUROC 0.8441 AUPRC 0.4825 | val 0.8700 | 57s
+00:03:21 INFO seed 3 | graph_full             test AUROC 0.8453 AUPRC 0.4920 | val 0.8675 | 75s
+00:04:13 INFO seed 3 | graph_permuted         test AUROC 0.8478 AUPRC 0.5031 | val 0.8673 | 52s
+00:05:16 INFO seed 3 | graph_random           test AUROC 0.8506 AUPRC 0.4917 | val 0.8685 | 64s
+00:05:20 INFO seed 4: split [8399, 1801, 1800] | strongest edges: NIDiasABP -- NIMAP (0.87); DiasABP -- MAP (0.84); ALT -- AST (0.82); NIMAP -- NISysABP (0.82); BUN -- Creatinine (0.76); MAP -- SysABP (0.71)
+00:05:23 INFO seed 4 | static_mlp             test AUROC 0.6933 AUPRC 0.2545 | val 0.6991 | 3s
+00:06:23 INFO seed 4 | temporal_only          test AUROC 0.8567 AUPRC 0.5522 | val 0.8610 | 60s
+00:06:26 INFO seed 4 | concat_mlp             test AUROC 0.8750 AUPRC 0.5692 | val 0.8769 | 3s
+00:07:28 INFO seed 4 | late_fusion            test AUROC 0.8692 AUPRC 0.5693 | val 0.8725 | 62s
+00:07:29 INFO seed 4 | gbm_concat             test AUROC 0.8703 AUPRC 0.5766 | val 0.8831 | 1s
+00:08:37 INFO seed 4 | graph_corr_k4          test AUROC 0.8701 AUPRC 0.5722 | val 0.8750 | 68s
+00:09:31 INFO seed 4 | graph_corr_k2          test AUROC 0.8678 AUPRC 0.5559 | val 0.8717 | 54s
+00:10:21 INFO seed 4 | graph_corr_k8          test AUROC 0.8646 AUPRC 0.5668 | val 0.8754 | 50s
+00:11:13 INFO seed 4 | graph_varvar_only      test AUROC 0.8705 AUPRC 0.5652 | val 0.8757 | 52s
+00:12:06 INFO seed 4 | graph_cross_only       test AUROC 0.8682 AUPRC 0.5663 | val 0.8733 | 53s
+00:13:48 INFO seed 4 | graph_meanpool         test AUROC 0.8726 AUPRC 0.5862 | val 0.8770 | 102s
+00:14:56 INFO seed 4 | graph_none             test AUROC 0.8663 AUPRC 0.5717 | val 0.8734 | 68s
+00:16:13 INFO seed 4 | graph_full             test AUROC 0.8717 AUPRC 0.5853 | val 0.8753 | 76s
+00:17:15 INFO seed 4 | graph_permuted         test AUROC 0.8733 AUPRC 0.5775 | val 0.8746 | 62s
+00:18:19 INFO seed 4 | graph_random           test AUROC 0.8646 AUPRC 0.5805 | val 0.8739 | 64s
+00:18:19 INFO done -> results\full\results.csv

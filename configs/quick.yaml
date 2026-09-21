@@ -1,0 +1,45 @@
+# CPU quick mode: PhysioNet 2012 set-a only (4,000 ICU stays), small model, 5 random splits.
+name: quick
+output_dir: results/quick
+seeds: [0, 1, 2, 3, 4]
+data:
+  data_dir: data
+  sets: [a]
+  val_frac: 0.15
+  test_frac: 0.15
+model:
+  d_node: 32
+  d_hidden: 64
+  dropout: 0.2
+  gnn_layers: 2
+  gnn_heads: 4
+train:
+  device: cpu
+  threads: 6
+  epochs: 30
+  patience: 6
+  batch_size: 128
+  eval_batch_size: 512
+  lr: 0.002
+  weight_decay: 0.01
+probe:
+  knn_k: 25
+experiments:
+  # --- baselines and modality ablations
+  - {name: static_mlp,        group: baseline, model: static_mlp}
+  - {name: temporal_only,     group: baseline, model: temporal_only}
+  - {name: concat_mlp,        group: baseline, model: concat_mlp}
+  - {name: late_fusion,       group: baseline, model: late_fusion}
+  - {name: gbm_concat,        group: reference, model: gbm}
+  # --- graph fusion (informed edges from training-split associations)
+  - {name: graph_corr_k4,     group: graph, model: graph, graph: {kind: corr_knn, k_var: 4, k_static: 6}}
+  - {name: graph_corr_k2,     group: sensitivity, model: graph, graph: {kind: corr_knn, k_var: 2, k_static: 3}}
+  - {name: graph_corr_k8,     group: sensitivity, model: graph, graph: {kind: corr_knn, k_var: 8, k_static: 12}}
+  - {name: graph_varvar_only, group: sensitivity, model: graph, graph: {kind: varvar_only, k_var: 4, k_static: 6}}
+  - {name: graph_cross_only,  group: sensitivity, model: graph, graph: {kind: cross_only, k_var: 4, k_static: 6}}
+  - {name: graph_meanpool,    group: sensitivity, model: graph, graph: {kind: corr_knn, k_var: 4, k_static: 6}, model_overrides: {readout: mean}}
+  # --- structure controls
+  - {name: graph_none,        group: control, model: graph, graph: {kind: none}}
+  - {name: graph_full,        group: control, model: graph, graph: {kind: full}}
+  - {name: graph_permuted,    group: control, model: graph, graph: {kind: permuted, k_var: 4, k_static: 6}}
+  - {name: graph_random,      group: control, model: graph, graph: {kind: random, k_var: 4, k_static: 6}}

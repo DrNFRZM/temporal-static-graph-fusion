@@ -1,0 +1,10 @@
+{
+  "tsgf": "0.1.0",
+  "python": "3.12.3",
+  "torch": "2.6.0+cu124",
+  "device": "cuda",
+  "gpu": "NVIDIA GeForce RTX 2060",
+  "platform": "Windows-11-10.0.26200-SP0",
+  "sklearn": "1.9.1",
+  "torch_geometric": "2.8.0.post1"
+}
