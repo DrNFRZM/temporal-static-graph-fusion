@@ -1,0 +1,34 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "temporal-static-graph-fusion"
+version = "0.1.0"
+description = "Controlled study of graph-based fusion for static and temporal representations"
+readme = "README.md"
+requires-python = ">=3.11"
+license = "MIT"
+authors = [
+  {name = "Farzam Nikbakhsh Jorshari"},
+]
+dependencies = [
+  "torch>=2.2,<3",
+  "torch-geometric>=2.5,<3",
+  "scikit-learn>=1.3,<2",
+  "pandas>=2.0,<4",
+  "numpy>=1.26,<3",
+  "matplotlib>=3.8,<4",
+  "pyyaml>=6.0,<7",
+]
+
+[project.optional-dependencies]
+dev = ["pytest>=8,<10"]
+
+[project.scripts]
+tsgf-data = "tsgf.data:_cli"
+tsgf-run = "tsgf.run:main"
+tsgf-report = "tsgf.report:main"
+
+[tool.setuptools.packages.find]
+include = ["tsgf*"]

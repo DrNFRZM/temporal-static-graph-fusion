@@ -1,0 +1,37 @@
+# Python environments and caches
+.venv/
+venv/
+env/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+
+# Packaging
+build/
+dist/
+*.egg-info/
+
+# Local configuration and secrets
+.env
+.env.*
+
+# Downloaded/generated data and large model artifacts
+data/raw/
+data/processed/
+*.pt
+*.pth
+*.ckpt
+checkpoints/
+
+# Local smoke runs; the small reviewed quick/full results remain tracked
+results/smoke/
+
+# Editors and operating systems
+.idea/
+.vscode/
+.DS_Store
+Thumbs.db

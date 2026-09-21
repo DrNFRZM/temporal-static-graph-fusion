@@ -1,0 +1,12 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite the repository and the dataset sources listed in the README."
+title: "Temporal-Static Graph Fusion for Multimodal Representation Learning"
+type: software
+authors:
+  - given-names: Farzam
+    family-names: Nikbakhsh Jorshari
+version: 0.1.0
+license: MIT
+abstract: >-
+  A controlled empirical study of whether a fixed association graph improves
+  fusion of static descriptors and irregular time-series representations.
