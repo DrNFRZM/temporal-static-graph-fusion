@@ -1,6 +1,6 @@
 # Temporal-Static Graph Fusion for Multimodal Representation Learning
 
-A small, controlled study of one question that comes before any graph-conditioned generative model:
+An experiment on combining static patient descriptors with ICU time series:
 
 > Does putting static (tabular) and temporal (time-series) information into **one graph** give a more useful
 > joint representation than concatenation or independent encoders — and does the graph *structure* matter?
@@ -165,6 +165,9 @@ first a 10-experiment subset for 3 seeds, then the resumable runner filled in th
 - Leakage considerations (train-only statistics and graph, outcome-derived scores used as probe targets only, informative missingness): see [docs/interview_guide.md §7](docs/interview_guide.md).
 
 ## Reproduce
+
+The [execution and result checks](docs/reproducibility.md) list the tested
+environment and the smoke run separately from the full experiments.
 
 Python ≥ 3.11 (developed and run with 3.12). For GPU use, install the PyTorch build appropriate for your
 platform first ([pytorch.org](https://pytorch.org/get-started/locally/)); the project install will reuse it.

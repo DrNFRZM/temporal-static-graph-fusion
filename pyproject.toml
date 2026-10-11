@@ -5,7 +5,7 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "temporal-static-graph-fusion"
 version = "0.1.0"
-description = "Controlled study of graph-based fusion for static and temporal representations"
+description = "Graph fusion versus concatenation for static patient data and ICU time series."
 readme = "README.md"
 requires-python = ">=3.11"
 license = "MIT"
