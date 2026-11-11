@@ -24,3 +24,5 @@ jobs:
           python -m pip install -r requirements.txt
       - name: Run synthetic-data tests
         run: python -m pytest
+      - name: Check committed result coverage and README arithmetic
+        run: python scripts/verify_results.py

@@ -30,6 +30,41 @@ from .utils import load_config, resolve_device, set_seed, setup_logging
 log = logging.getLogger("tsgf.run")
 
 
+def resume_config(out: Path, cfg: dict, exps: list[dict]) -> dict:
+    """Reject mixed protocols before writing logs or replacing run provenance.
+
+    Additional seeds and newly named experiments may extend a run. Shared settings
+    and the definition of an existing experiment must remain identical.
+    """
+    previous_path = out / "config_used.yaml"
+    csv = out / "results.csv"
+    if csv.exists() and not previous_path.exists():
+        raise ValueError("results.csv has no config_used.yaml; use a new --output-dir")
+    previous = load_config(previous_path) if previous_path.exists() else None
+    record = {**cfg, "experiments": exps}
+    if previous is not None:
+        ignored = {"name", "output_dir", "seeds", "experiments"}
+        old = {k: v for k, v in previous.items() if k not in ignored}
+        new = {k: v for k, v in cfg.items() if k not in ignored}
+        if old != new:
+            raise ValueError("run settings differ from config_used.yaml; use a new --output-dir")
+        definitions = {exp["name"]: exp for exp in previous["experiments"]}
+        for exp in exps:
+            if exp["name"] in definitions and definitions[exp["name"]] != exp:
+                raise ValueError(f"experiment {exp['name']!r} changed; use a new --output-dir")
+            definitions[exp["name"]] = exp
+        record = {**cfg, "seeds": sorted(set(previous["seeds"]) | set(cfg["seeds"])),
+                  "experiments": list(definitions.values())}
+    if csv.exists():
+        rows = pd.read_csv(csv)
+        if rows.duplicated(["experiment", "seed"]).any():
+            raise ValueError("duplicate (experiment, seed) rows in results.csv; inspect the run")
+        known = {exp["name"] for exp in previous["experiments"]}
+        if not set(rows["experiment"]).issubset(known) or not set(rows["seed"]).issubset(previous["seeds"]):
+            raise ValueError("results.csv contains rows absent from recorded config; inspect the run")
+    return record
+
+
 def _gbm(tr: dict, va: dict, te: dict, seed: int) -> dict:
     """Reference: gradient boosting on the same concatenated summary + static features."""
     feats = lambda d: np.concatenate([d["f"], d["s_vec"]], axis=1)
@@ -86,11 +121,19 @@ def main(argv=None) -> None:
     cfg = load_config(args.config)
     if args.seeds:
         cfg["seeds"] = [int(s) for s in args.seeds.split(",")]
-    if args.epochs:
+    if args.epochs is not None:
+        if args.epochs < 1:
+            ap.error("--epochs must be positive")
         cfg["train"]["epochs"] = args.epochs
     out = Path(args.output_dir or cfg["output_dir"])
-    setup_logging(out)
-    exps = [e for e in cfg["experiments"] if not args.only or e["name"] in args.only.split(",")]
+    names = [e["name"] for e in cfg["experiments"]]
+    if not names or len(names) != len(set(names)) or not cfg["seeds"] or len(cfg["seeds"]) != len(set(cfg["seeds"])):
+        ap.error("experiment names and seeds must be nonempty and unique")
+    selected = args.only.split(",") if args.only else names
+    if set(selected) - set(names):
+        ap.error(f"unknown experiments in --only: {sorted(set(selected) - set(names))}")
+    exps = [e for e in cfg["experiments"] if e["name"] in selected]
+    record = resume_config(out, cfg, exps)
     device = resolve_device(cfg["train"]["device"])
     if device.type == "cpu" and cfg["train"].get("threads"):
         torch.set_num_threads(cfg["train"]["threads"])
@@ -100,9 +143,14 @@ def main(argv=None) -> None:
            "platform": platform.platform()}
     import sklearn, torch_geometric
     env.update(sklearn=sklearn.__version__, torch_geometric=torch_geometric.__version__)
+    environment = out / "environment.json"
+    if environment.exists() and json.loads(environment.read_text(encoding="utf-8")) != env:
+        raise ValueError("environment differs from the recorded run; use a new --output-dir")
+    setup_logging(out)
     log.info("environment: %s", env)
-    (out / "environment.json").write_text(json.dumps(env, indent=2))
-    (out / "config_used.yaml").write_text(yaml.safe_dump({**cfg, "experiments": exps}, sort_keys=False))
+    if not environment.exists():
+        environment.write_text(json.dumps(env, indent=2), encoding="utf-8")
+    (out / "config_used.yaml").write_text(yaml.safe_dump(record, sort_keys=False), encoding="utf-8")
 
     raw = load_raw(cfg["data"]["data_dir"], tuple(cfg["data"]["sets"]))
     log.info("dataset: N=%d, mortality rate %.3f, %d dynamic vars x %d h",
