@@ -174,7 +174,8 @@ platform first ([pytorch.org](https://pytorch.org/get-started/locally/)); the pr
 
 ```bash
 pip install -r requirements.txt
-python -m pytest                                      # 31 tests, no download needed (synthetic data)
+python -m pytest                                      # synthetic fixtures and saved-result checks; no download
+python scripts/verify_results.py                      # check published AUROC/AUPRC against saved per-split rows
 python -m tsgf.run --config configs/quick.yaml        # CPU; downloads set-a on first use (~1.1 h of training in total on a 6-core desktop CPU)
 python -m tsgf.report --results results/quick         # tables + figures
 python -m tsgf.run --config configs/full.yaml         # GPU (device: auto), sets a+b+c, 5 seeds (~1 h on an RTX 2060)
@@ -186,6 +187,11 @@ Quick check (~2 min): `python -m tsgf.run --config configs/quick.yaml --seeds 0 
 - Determinism: every seed sets Python/NumPy/PyTorch seeds; splits, graphs and initialisations are derived from the seed.
   On CPU, two runs give identical numbers (tested). On GPU, scatter operations in message passing can add tiny nondeterminism.
 - Runs are resumable: finished `(experiment, seed)` pairs in `results.csv` are skipped.
+- Resuming requires the same data, model, training, probe, and recorded software
+  environment. Changed settings or an altered experiment definition are rejected
+  before the run is modified. Extra seeds and newly named experiments can extend
+  a compatible run; earlier definitions remain in `config_used.yaml`. Use a new
+  `--output-dir` for another protocol or environment.
 - Every run writes `run.log`, `config_used.yaml`, `environment.json`, `results.csv` next to its outputs.
 
 ## Repository layout
@@ -198,13 +204,16 @@ tsgf/train.py       training loop, early stopping
 tsgf/evaluate.py    embedding probes
 tsgf/run.py         experiment runner       tsgf/report.py   tables and figures
 configs/            quick.yaml (CPU), full.yaml (GPU)
-tests/              31 pytest tests on synthetic data
+tests/              synthetic-data, result-consistency, and safe-resumption tests
 results/quick/      real outputs of the quick run (csv, log, summary, figures)
 results/full/       real outputs of the GPU run
 docs/               formulation, design decisions, experiment plan, interview guide, learning roadmap
 ```
 
 ## Documents
+
+[Development and attribution](docs/development.md) distinguishes the independent
+original implementation from the November 2026 AI-assisted maintenance pass.
 
 [Problem formulation](docs/problem_formulation.md) · [Design decisions](docs/design_decisions.md) ·
 [Experiment plan](docs/experiment_plan.md) · [Interview guide](docs/interview_guide.md) · [Learning roadmap](docs/learning_roadmap.md)
